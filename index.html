@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="ko"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>옷장</title>
+<style>
+html,body{margin:0;background:#fff}
+body{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+.grid{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;max-width:1920px;margin:0 auto}
+.grid img{width:231px;height:231px;display:block;object-fit:contain}
+@media (max-width:700px){.grid img{width:calc((100vw - 20px)/3);height:calc((100vw - 20px)/3)}}
+</style></head>
+<body><div class="grid" id="grid"></div>
+<script>
+fetch('clothes.json').then(r=>r.json()).then(list=>{
+  const g=document.getElementById('grid');
+  list.forEach(c=>{const i=document.createElement('img');i.src=c.image;i.alt=c.name;i.loading='lazy';g.appendChild(i);});
+}).catch(()=>{document.getElementById('grid').textContent='clothes.json을 불러오지 못했어요.';});
+</script></body></html>
