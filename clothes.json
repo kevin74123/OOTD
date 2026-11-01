@@ -1,45 +1,56 @@
 [
   {
+    "id": "c01",
     "name": "SKYLRK 후디",
     "image": "images/01.webp"
   },
   {
+    "id": "c02",
     "name": "Supreme x Hanes 본 서멀 크루",
     "image": "images/02.webp"
   },
   {
+    "id": "c03",
     "name": "크롬하츠 집업 후디",
     "image": "images/03.webp"
   },
   {
+    "id": "c04",
     "name": "JanSport 패딩",
     "image": "images/04.webp"
   },
   {
+    "id": "c05",
     "name": "Stüssy 후디 (라이트 그레이)",
     "image": "images/05.webp"
   },
   {
+    "id": "c06",
     "name": "블랙 와이드 스웻팬츠",
     "image": "images/06.webp"
   },
   {
+    "id": "c07",
     "name": "시안 집업 후디",
     "image": "images/07.webp"
   },
   {
+    "id": "c08",
     "name": "Stüssy 후디 (블랙)",
     "image": "images/08.webp"
   },
   {
+    "id": "c09",
     "name": "Stüssy 집업 후디 (그레이)",
     "image": "images/09.webp"
   },
   {
+    "id": "c10",
     "name": "Supreme 아치로고 집업 후디",
     "image": "images/10.webp"
   },
   {
+    "id": "c11",
     "name": "Nike 에어포스 1 로우",
     "image": "images/11.webp"
   }
