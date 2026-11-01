@@ -6,7 +6,7 @@ html,body{margin:0;background:#fff;font:700 14px/1.4 Helvetica,"Helvetica Neue",
 body{padding:env(safe-area-inset-top,0) 0 calc(130px + env(safe-area-inset-bottom,0))}
 button{font:inherit;font-size:12px;text-transform:uppercase;border:0;background:transparent;padding:9px 6px;border-radius:8px;color:#111;white-space:nowrap}
 button.on{background:#111;color:#fff}
-button{-webkit-tap-highlight-color:transparent}button:active{background:#e00!important;color:#fff!important;border-color:#e00!important;transform:scale(1.06)}
+button{-webkit-tap-highlight-color:transparent}button:active{color:#e00!important;transform:scale(1.06)}
 #bu{position:fixed;right:12px;bottom:calc(var(--nb) + 8px);width:84px;z-index:6}
 .grid{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;max-width:1920px;margin:0 auto}
 .c{position:relative;width:231px;height:231px;touch-action:pan-y;-webkit-touch-callout:none;user-select:none}
@@ -17,17 +17,19 @@ nav{position:fixed;left:0;right:0;bottom:0;display:flex;background:#fff;padding-
 nav button{flex:1;border:0;border-radius:0;padding:16px 0;opacity:.4}nav button.on{opacity:1;background:#fff;color:#111;font-weight:700}
 .cvx{position:relative;overflow:hidden}
 .it{position:absolute;background:var(--u) var(--ps)/var(--sz) no-repeat}
-#cv .it{outline:1px dashed #888}
+#cv.mk .it{outline:1px dashed #888}
+#cv.mk{border:3px solid #111}
+.vcol{position:fixed;right:0;bottom:calc(var(--nb) + 12px);display:flex;flex-direction:column;align-items:flex-end;gap:4px;z-index:5}.vcol button{padding:9px 12px 9px 8px}
 .row{display:flex;gap:8px;justify-content:center;align-items:flex-start;padding:10px}
 .col{display:flex;flex-direction:column;gap:8px;width:84px;flex:none}
-#cv{width:min(calc(100vw - 20px),480px);aspect-ratio:3/4;touch-action:none;margin:10px auto}#cv.big{width:min(100vw,720px);margin:0 auto}
+#cv{width:min(calc(100vw - 20px),480px,calc((100svh - 270px)*.75));aspect-ratio:3/4;touch-action:none;margin:10px auto}#cv.big{width:min(100vw,720px);margin:0 auto}
 .ttl{text-align:center;margin:10px}
 .bar{position:fixed;left:0;right:0;bottom:var(--nb);height:48px;display:grid;grid-auto-flow:column;grid-auto-columns:1fr;align-items:center;justify-items:center;background:#fff;z-index:5}
 #bk,#hg{position:fixed;left:12px;bottom:calc(var(--nb) + 12px);width:52px;height:52px;border-radius:50%;padding:0;z-index:6;display:none;background:#efefef}
 #hg{bottom:calc(var(--nb) + 70px)}
-#bk.hot{background:#e00;color:#fff;transform:scale(1.2)}
-#bk b{position:absolute;top:-4px;right:-4px;min-width:18px;height:18px;border-radius:9px;background:#e00;color:#fff;font-size:11px;line-height:18px}
-#dr{position:fixed;left:0;right:0;bottom:calc(var(--nb) + 130px);background:#fff;padding:8px;z-index:4;display:none}
+#bk.hot{color:#e00;transform:scale(1.2)}
+#bk b{position:absolute;top:-4px;right:-4px;min-width:18px;height:18px;border-radius:9px;background:#111;color:#fff;font-size:11px;line-height:18px}
+#dr{position:fixed;left:0;right:0;bottom:calc(var(--nb) + 190px);background:#fff;padding:8px;z-index:4;display:none}
 .st{display:flex;gap:8px;overflow-x:auto;margin-bottom:8px}.t{flex:none;width:84px;height:84px;touch-action:pan-x}.t img{width:100%;height:100%;object-fit:contain;pointer-events:none}
 .gh{position:fixed;width:90px;transform:translate(-50%,-50%);pointer-events:none;z-index:20;opacity:.85}
 .list{flex:1;display:flex;flex-wrap:wrap;gap:14px;justify-content:center}.oc{width:calc((100vw - 34px)/2);max-width:360px}.pv{width:100%;aspect-ratio:3/4}
@@ -96,7 +98,7 @@ function drawer(){const el=$('#dr');el.innerHTML='';const ch=document.createElem
  ['ALL','BASKET',...T,'UNTAGGED'].forEach(f=>{const b=document.createElement('button');b.textContent=f;if(f==F)b.className='on';b.onclick=()=>{F=f;drawer()};ch.appendChild(b)});
  L.filter(c=>F=='ALL'||(F=='BASKET'?S.tray.includes(c.id):F=='UNTAGGED'?!S.tags[c.id]:S.tags[c.id]==F)).forEach(c=>st.appendChild(thumb(c)));
  if(!st.children.length)st.textContent='Empty';el.append(ch,st)}
-function make(){$('#v').innerHTML='<div id="cv" class="cvx"></div><div class="bar"><button id="b1">Rearrange</button><button id="b2">Remove</button><button id="b3">New</button><button id="b4">Save</button></div>';cvInit();draw();
+function make(){$('#v').innerHTML='<div id="cv" class="cvx mk"></div><div class="vcol"><button id="b1">Rearrange</button><button id="b2">Remove</button><button id="b3">New</button><button id="b4">Save</button></div>';cvInit();draw();
  $('#b1').onclick=()=>{const ids=S.cv.map(o=>o.id);S.cv=[];ids.forEach(place);sel=-1;draw()};
  $('#b2').onclick=()=>{if(sel>=0){const id=S.cv.splice(sel,1)[0].id;S.tray=S.tray.filter(i=>i!=id);sel=-1;save();draw()}};
  $('#b3').onclick=()=>{if(S.cv.length&&!confirm('Clear the current outfit?'))return;S.cv=[];S.tray=[];S.ed=null;sel=-1;save();draw()};
