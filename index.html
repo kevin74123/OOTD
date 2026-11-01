@@ -6,18 +6,18 @@ html,body{margin:0;background:#fff;font:14px/1.4 Helvetica,"Helvetica Neue",Aria
 body{padding:env(safe-area-inset-top,0) 0 calc(70px + env(safe-area-inset-bottom,0))}
 button{font:inherit;font-size:12px;text-transform:uppercase;border:1px solid #111;background:#fff;padding:9px 6px;border-radius:8px;color:#111;white-space:nowrap}
 button.on{background:#111;color:#fff}
+button{-webkit-tap-highlight-color:transparent}button:active{background:#e00!important;color:#fff!important;border-color:#e00!important;transform:scale(1.06)}
+#bu{position:fixed;right:12px;bottom:calc(62px + env(safe-area-inset-bottom,0));width:84px;z-index:6}
 .grid{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;max-width:1920px;margin:0 auto}
 .c{position:relative;width:231px;height:231px;touch-action:pan-y;-webkit-touch-callout:none;user-select:none}
 .c img{width:100%;height:100%;object-fit:contain;display:block;pointer-events:none;-webkit-user-drag:none}
-.w{position:absolute;top:4px;right:4px;font-size:18px}.ok{position:absolute;bottom:4px;right:6px;font-size:12px}
-.warn{margin:10px;padding:8px;text-align:center;background:#fff3cd;border-radius:8px}
+.w{position:absolute;top:4px;right:4px;font-size:18px}.ok{position:absolute;bottom:6px;right:6px;width:20px;height:20px;border-radius:50%;background:#1fa84f;color:#fff;font-size:13px;line-height:20px;text-align:center}
 @media(max-width:700px){.c{width:calc((100vw - 20px)/3);height:calc((100vw - 20px)/3)}}
 nav{position:fixed;left:0;right:0;bottom:0;display:flex;background:#fff;padding-bottom:env(safe-area-inset-bottom,0);z-index:5}
 nav button{flex:1;border:0;border-radius:0;padding:16px 0;opacity:.4}nav button.on{opacity:1;background:#fff;color:#111;font-weight:700}
 .cvx{position:relative;overflow:hidden}
 .it{position:absolute;background:var(--u) var(--ps)/var(--sz) no-repeat}
-.it i{position:absolute;inset:0;background:#e00;opacity:0;pointer-events:none;-webkit-mask:var(--u) var(--ps)/var(--sz) no-repeat;mask:var(--u) var(--ps)/var(--sz) no-repeat}
-.it.h i{opacity:.55}
+#cv .it{outline:1px dashed #888}
 .row{display:flex;gap:8px;justify-content:center;align-items:flex-start;padding:10px}
 .col{display:flex;flex-direction:column;gap:8px;width:84px;flex:none}
 #cv{width:min(calc(100vw - 116px),480px);aspect-ratio:3/4;touch-action:none;flex:none}
@@ -48,9 +48,11 @@ function load(){try{const j=localStorage.getItem(K);if(j)Object.assign(S,JSON.pa
 const sz=(id,s)=>{const b=byId(id).b,w=BASE*b[2]*s;return[w,w*b[3]/b[2]/AR]};
 function place(id){if(!S.tray.includes(id))S.tray.push(id);S.cv=S.cv.filter(o=>o.id!=id);const g=gr(id),[w,h]=sz(id,1);let u=0;S.cv.forEach(o=>{if(gr(o.id)==g)u+=sz(o.id,o.s)[0]});
  const cl=v=>Math.min(1-w/2,Math.max(w/2,v));S.cv.push({id,x:g==4?.5:cl(g==0||g==2?.5-u-w/2:.5+u+w/2),y:g==4?.5:g<2?.5-h/2:.5+h/2,s:1,r:0});save()}
-function renderCv(el,items,s,h){el.innerHTML='';items.forEach((o,i)=>{const c=byId(o.id),[bx,by,bw,bh]=c.b,d=document.createElement('div'),H=h&&i===s;d.className='it'+(H?' h':'');d.dataset.i=i;
- d.style.cssText=`--u:url(${c.image});--sz:${100/bw}% ${100/bh}%;--ps:${bw<1?bx/(1-bw)*100:0}% ${bh<1?by/(1-bh)*100:0}%;left:${o.x*100}%;top:${o.y*100}%;width:${BASE*bw*o.s*100}%;aspect-ratio:${bw}/${bh};transform:translate(-50%,-50%) rotate(${o.r}rad) scale(${H?1.08:1})`;d.innerHTML='<i></i>';el.appendChild(d)})}
-const P=new Map(),draw=()=>renderCv($('#cv'),S.cv,sel,P.size>0);
+function renderCv(el,items){const m={},k=new Set();[...el.children].forEach(d=>m[d.dataset.id]=d);
+ items.forEach((o,i)=>{let d=m[o.id];if(!d){d=document.createElement('div');d.className='it';d.dataset.id=o.id;el.appendChild(d)}k.add(o.id);const c=byId(o.id),[bx,by,bw,bh]=c.b;d.dataset.i=i;
+  d.style.cssText=`--u:url(${c.image});--sz:${100/bw}% ${100/bh}%;--ps:${bw<1?bx/(1-bw)*100:0}% ${bh<1?by/(1-bh)*100:0}%;left:${o.x*100}%;top:${o.y*100}%;width:${BASE*bw*o.s*100}%;aspect-ratio:${bw}/${bh};transform:translate(-50%,-50%) rotate(${o.r}rad);z-index:${i}`});
+ [...el.children].forEach(d=>{if(!k.has(d.dataset.id))d.remove()})}
+const P=new Map(),draw=()=>renderCv($('#cv'),S.cv);
 function mark(d,id){const o=d.querySelector('.ok');if(S.tray.includes(id)){if(!o)d.insertAdjacentHTML('beforeend','<span class="ok">✓</span>')}else if(o)o.remove()}
 function bd(){const b=$('#bk b');b.textContent=S.tray.length;b.style.display=S.tray.length?'block':'none'}
 const over=(x,y)=>{const r=$('#bk').getBoundingClientRect();return x>r.left-24&&x<r.right+24&&y>r.top-24&&y<r.bottom+24};
@@ -62,9 +64,10 @@ function drag(d,c){let st,gh,tm;
  d.onpointermove=e=>{if(!st)return;if(gh)return mv(e.clientX,e.clientY);const m=Math.hypot(e.clientX-st.x,e.clientY-st.y);if(e.pointerType=='mouse'){if(m>6)lift(e.clientX,e.clientY)}else if(m>10){clearTimeout(tm);st=null}};
  d.onpointerup=e=>{if(!st)return;const m=Math.hypot(e.clientX-st.x,e.clientY-st.y);if(gh){if(over(e.clientX,e.clientY)){if(!S.tray.includes(c.id))S.tray.push(c.id);save();mark(d,c.id);bd()}end()}else{end();if(m<10)detail(c)}};
  d.onpointercancel=end;d.oncontextmenu=e=>e.preventDefault()}
+document.addEventListener('touchstart',()=>{},{passive:true});
 document.addEventListener('touchmove',e=>{if(D)e.preventDefault()},{passive:false});
-function home(){const u=L.filter(c=>!S.tags[c.id]).length;$('#v').innerHTML=(u?`<div class="warn">⚠️ ${u} item${u>1?'s':''} without tags</div>`:'')+'<div class="grid"></div>';
- L.forEach(c=>{const d=document.createElement('div');d.className='c';d.innerHTML=`<img src="${c.image}" alt="${c.name}">`+(S.tags[c.id]?'':'<span class="w">⚠️</span>');mark(d,c.id);drag(d,c);$('.grid').appendChild(d)});bd()}
+function home(){$('#v').innerHTML='<div class="grid"></div>';
+ L.forEach(c=>{const d=document.createElement('div');d.className='c';d.innerHTML=`<img src="${c.image}" alt="${c.name}">`+(S.tags[c.id]?'':'<span class="w">🚫</span>');mark(d,c.id);drag(d,c);$('.grid').appendChild(d)});bd()}
 function detail(c){const o=$('#dt');o.style.display='block';o.innerHTML=`<img src="${c.image}"><h3>${c.name}</h3><div class="st" id="tg"></div><p><button id="tr"></button> <button id="x">Close</button></p>`;
  T.forEach(t=>{const b=document.createElement('button');b.textContent=t;if(S.tags[c.id]==t)b.className='on';b.onclick=()=>{S.tags[c.id]==t?delete S.tags[c.id]:S.tags[c.id]=t;save();detail(c);home()};$('#tg').appendChild(b)});
  const tr=$('#tr'),lb=()=>tr.textContent=S.tray.includes(c.id)?'Remove from basket':'Add to basket';lb();
@@ -92,15 +95,15 @@ function drawer(){const el=$('#dr');el.innerHTML='';const ch=document.createElem
  if(!st.children.length)st.textContent='Empty';el.append(ch,st)}
 function make(){$('#v').innerHTML='<div class="row"><div id="cv" class="cvx"></div><div class="col"><button id="b1">Rearrange</button><button id="b2">Remove</button><button id="b3">New</button><button id="b4">Save</button></div></div>';cvInit();draw();
  $('#b1').onclick=()=>{const ids=S.cv.map(o=>o.id);S.cv=[];ids.forEach(place);sel=-1;draw()};
- $('#b2').onclick=()=>{if(sel>=0){S.cv.splice(sel,1);sel=-1;save();draw()}};
- $('#b3').onclick=()=>{if(S.cv.length&&!confirm('Clear the current outfit?'))return;S.cv=[];S.ed=null;sel=-1;save();draw()};
+ $('#b2').onclick=()=>{if(sel>=0){const id=S.cv.splice(sel,1)[0].id;S.tray=S.tray.filter(i=>i!=id);sel=-1;save();draw()}};
+ $('#b3').onclick=()=>{if(S.cv.length&&!confirm('Clear the current outfit?'))return;S.cv=[];S.tray=[];S.ed=null;sel=-1;save();draw()};
  $('#b4').onclick=()=>{const n=prompt('Outfit name',S.ed!=null&&S.outfits[S.ed]?S.outfits[S.ed].name:'');if(n===null)return;const o={name:n||'Outfit',items:JSON.parse(JSON.stringify(S.cv))};
-  if(S.ed!=null&&S.outfits[S.ed])S.outfits[S.ed]=o;else{S.outfits.push(o);S.ed=S.outfits.length-1}save();alert('Saved')}}
-function saved(){$('#v').innerHTML='<div class="row"><div class="list"></div><div class="col"><button id="bu">Backup</button></div></div>';
+  if(S.ed!=null&&S.outfits[S.ed])S.outfits[S.ed]=o;else S.outfits.push(o);S.cv=[];S.tray=[];S.ed=null;sel=-1;save();go('saved')}}
+function saved(){$('#v').innerHTML='<div class="row"><div class="list"></div></div><button id="bu">Backup</button>';
  if(!S.outfits.length)$('.list').textContent='No outfits yet';
  S.outfits.forEach((o,i)=>{const d=document.createElement('div');d.className='oc';d.innerHTML='<div><div class="pv cvx"></div><b></b></div><div class="col"><button class="op">Open</button><button class="dl">Delete</button></div>';
-  d.querySelector('b').textContent=o.name;renderCv(d.querySelector('.pv'),o.items,-1,false);
-  d.querySelector('.op').onclick=()=>{S.cv=JSON.parse(JSON.stringify(o.items));S.ed=i;sel=-1;save();go('make')};
+  d.querySelector('b').textContent=o.name;renderCv(d.querySelector('.pv'),o.items);
+  d.querySelector('.op').onclick=()=>{S.cv=JSON.parse(JSON.stringify(o.items));S.tray=o.items.map(x=>x.id);S.ed=i;sel=-1;save();go('make')};
   d.querySelector('.dl').onclick=()=>{if(!confirm('Delete this outfit?'))return;S.outfits.splice(i,1);if(S.ed==i)S.ed=null;else if(S.ed>i)S.ed--;save();saved()};$('.list').appendChild(d)});
  $('#bu').onclick=backup}
 function backup(){const o=$('#dt');o.style.display='block';o.innerHTML='<h3>Backup / Restore</h3><p>Copy this text and keep it in a note. To restore, paste a backup below and press Restore.</p><textarea id="ta"></textarea><p><button id="cp">Copy</button> <button id="rs">Restore</button> <button id="x">Close</button></p>';
