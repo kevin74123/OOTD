@@ -1,57 +1,123 @@
 [
-  {
-    "id": "c01",
-    "name": "SKYLRK 후디",
-    "image": "images/01.webp"
-  },
-  {
-    "id": "c02",
-    "name": "Supreme x Hanes 본 서멀 크루",
-    "image": "images/02.webp"
-  },
-  {
-    "id": "c03",
-    "name": "크롬하츠 집업 후디",
-    "image": "images/03.webp"
-  },
-  {
-    "id": "c04",
-    "name": "JanSport 패딩",
-    "image": "images/04.webp"
-  },
-  {
-    "id": "c05",
-    "name": "Stüssy 후디 (라이트 그레이)",
-    "image": "images/05.webp"
-  },
-  {
-    "id": "c06",
-    "name": "블랙 와이드 스웻팬츠",
-    "image": "images/06.webp"
-  },
-  {
-    "id": "c07",
-    "name": "시안 집업 후디",
-    "image": "images/07.webp"
-  },
-  {
-    "id": "c08",
-    "name": "Stüssy 후디 (블랙)",
-    "image": "images/08.webp"
-  },
-  {
-    "id": "c09",
-    "name": "Stüssy 집업 후디 (그레이)",
-    "image": "images/09.webp"
-  },
-  {
-    "id": "c10",
-    "name": "Supreme 아치로고 집업 후디",
-    "image": "images/10.webp"
-  },
-  {
-    "id": "c11",
-    "name": "Nike 에어포스 1 로우",
-    "image": "images/11.webp"
-  }
+ {
+  "id": "c01",
+  "name": "SKYLRK Hoodie",
+  "image": "images/01.webp",
+  "b": [
+   0.1604,
+   0.0896,
+   0.6792,
+   0.8208
+  ]
+ },
+ {
+  "id": "c02",
+  "name": "Supreme x Hanes Bones Thermal Crew",
+  "image": "images/02.webp",
+  "b": [
+   0.1229,
+   0.1,
+   0.7562,
+   0.8
+  ]
+ },
+ {
+  "id": "c03",
+  "name": "Chrome Hearts Zip Hoodie",
+  "image": "images/03.webp",
+  "b": [
+   0.2083,
+   0.0896,
+   0.5833,
+   0.8208
+  ]
+ },
+ {
+  "id": "c04",
+  "name": "JanSport Puffer",
+  "image": "images/04.webp",
+  "b": [
+   0.1229,
+   0.0917,
+   0.7562,
+   0.8167
+  ]
+ },
+ {
+  "id": "c05",
+  "name": "Stüssy Hoodie (Light Gray)",
+  "image": "images/05.webp",
+  "b": [
+   0.1187,
+   0.0896,
+   0.7625,
+   0.8208
+  ]
+ },
+ {
+  "id": "c06",
+  "name": "Black Wide Sweatpants",
+  "image": "images/06.webp",
+  "b": [
+   0.2271,
+   0.1083,
+   0.5354,
+   0.7854
+  ]
+ },
+ {
+  "id": "c07",
+  "name": "Cyan Zip Hoodie",
+  "image": "images/07.webp",
+  "b": [
+   0.1708,
+   0.0917,
+   0.6583,
+   0.8187
+  ]
+ },
+ {
+  "id": "c08",
+  "name": "Stüssy Hoodie (Black)",
+  "image": "images/08.webp",
+  "b": [
+   0.175,
+   0.0896,
+   0.6479,
+   0.8208
+  ]
+ },
+ {
+  "id": "c09",
+  "name": "Stüssy Zip Hoodie (Gray)",
+  "image": "images/09.webp",
+  "b": [
+   0.15,
+   0.0917,
+   0.7,
+   0.8187
+  ]
+ },
+ {
+  "id": "c10",
+  "name": "Supreme Arc Logo Zip Hoodie",
+  "image": "images/10.webp",
+  "b": [
+   0.1062,
+   0.0896,
+   0.7896,
+   0.8229
+  ]
+ },
+ {
+  "id": "c11",
+  "name": "Nike Air Force 1 Low",
+  "image": "images/11.webp",
+  "b": [
+   0.1208,
+   0.4042,
+   0.7583,
+   0.35
+  ]
+ }
 ]
