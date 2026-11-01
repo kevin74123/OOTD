@@ -1,13 +1,13 @@
 <!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Closet</title><style>
-:root{color-scheme:light}*{box-sizing:border-box}
-html,body{margin:0;background:#fff;font:14px/1.4 Helvetica,"Helvetica Neue",Arial,sans-serif;color:#111;letter-spacing:.02em}
-body{padding:env(safe-area-inset-top,0) 0 calc(70px + env(safe-area-inset-bottom,0))}
-button{font:inherit;font-size:12px;text-transform:uppercase;border:1px solid #111;background:#fff;padding:9px 6px;border-radius:8px;color:#111;white-space:nowrap}
+:root{color-scheme:light;--nb:calc(50px + env(safe-area-inset-bottom,0px))}*{box-sizing:border-box}
+html,body{margin:0;background:#fff;font:700 14px/1.4 Helvetica,"Helvetica Neue",Arial,sans-serif;color:#111;letter-spacing:.02em}
+body{padding:env(safe-area-inset-top,0) 0 calc(130px + env(safe-area-inset-bottom,0))}
+button{font:inherit;font-size:12px;text-transform:uppercase;border:0;background:transparent;padding:9px 6px;border-radius:8px;color:#111;white-space:nowrap}
 button.on{background:#111;color:#fff}
 button{-webkit-tap-highlight-color:transparent}button:active{background:#e00!important;color:#fff!important;border-color:#e00!important;transform:scale(1.06)}
-#bu{position:fixed;right:12px;bottom:calc(62px + env(safe-area-inset-bottom,0));width:84px;z-index:6}
+#bu{position:fixed;right:12px;bottom:calc(var(--nb) + 8px);width:84px;z-index:6}
 .grid{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;max-width:1920px;margin:0 auto}
 .c{position:relative;width:231px;height:231px;touch-action:pan-y;-webkit-touch-callout:none;user-select:none}
 .c img{width:100%;height:100%;object-fit:contain;display:block;pointer-events:none;-webkit-user-drag:none}
@@ -20,14 +20,17 @@ nav button{flex:1;border:0;border-radius:0;padding:16px 0;opacity:.4}nav button.
 #cv .it{outline:1px dashed #888}
 .row{display:flex;gap:8px;justify-content:center;align-items:flex-start;padding:10px}
 .col{display:flex;flex-direction:column;gap:8px;width:84px;flex:none}
-#cv{width:min(calc(100vw - 116px),480px);aspect-ratio:3/4;touch-action:none;flex:none}
-#bk,#hg{position:fixed;left:12px;bottom:calc(62px + env(safe-area-inset-bottom,0));width:52px;height:52px;border-radius:50%;padding:0;z-index:6;display:none}
+#cv{width:min(calc(100vw - 20px),480px);aspect-ratio:3/4;touch-action:none;margin:10px auto}#cv.big{width:min(100vw,720px);margin:0 auto}
+.ttl{text-align:center;margin:10px}
+.bar{position:fixed;left:0;right:0;bottom:var(--nb);height:48px;display:grid;grid-auto-flow:column;grid-auto-columns:1fr;align-items:center;justify-items:center;background:#fff;z-index:5}
+#bk,#hg{position:fixed;left:12px;bottom:calc(var(--nb) + 12px);width:52px;height:52px;border-radius:50%;padding:0;z-index:6;display:none;background:#efefef}
+#hg{bottom:calc(var(--nb) + 70px)}
 #bk.hot{background:#e00;color:#fff;transform:scale(1.2)}
 #bk b{position:absolute;top:-4px;right:-4px;min-width:18px;height:18px;border-radius:9px;background:#e00;color:#fff;font-size:11px;line-height:18px}
-#dr{position:fixed;left:0;right:0;bottom:calc(126px + env(safe-area-inset-bottom,0));background:#fff;padding:8px;z-index:4;display:none}
+#dr{position:fixed;left:0;right:0;bottom:calc(var(--nb) + 130px);background:#fff;padding:8px;z-index:4;display:none}
 .st{display:flex;gap:8px;overflow-x:auto;margin-bottom:8px}.t{flex:none;width:84px;height:84px;touch-action:pan-x}.t img{width:100%;height:100%;object-fit:contain;pointer-events:none}
 .gh{position:fixed;width:90px;transform:translate(-50%,-50%);pointer-events:none;z-index:20;opacity:.85}
-.list{flex:1;display:flex;flex-wrap:wrap;gap:16px}.oc{display:flex;gap:6px;align-items:flex-start}.oc .col{width:64px}.pv{width:130px;aspect-ratio:3/4}
+.list{flex:1;display:flex;flex-wrap:wrap;gap:14px;justify-content:center}.oc{width:calc((100vw - 34px)/2);max-width:360px}.pv{width:100%;aspect-ratio:3/4}
 #dt{display:none;position:fixed;inset:0;background:#fff;z-index:10;overflow:auto;padding:16px;text-align:center}
 #dt>img{max-width:100%;max-height:50vh}#dt .st{justify-content:center;flex-wrap:wrap}#dt textarea{width:100%;height:40vh}
 </style></head><body>
@@ -93,7 +96,7 @@ function drawer(){const el=$('#dr');el.innerHTML='';const ch=document.createElem
  ['ALL','BASKET',...T,'UNTAGGED'].forEach(f=>{const b=document.createElement('button');b.textContent=f;if(f==F)b.className='on';b.onclick=()=>{F=f;drawer()};ch.appendChild(b)});
  L.filter(c=>F=='ALL'||(F=='BASKET'?S.tray.includes(c.id):F=='UNTAGGED'?!S.tags[c.id]:S.tags[c.id]==F)).forEach(c=>st.appendChild(thumb(c)));
  if(!st.children.length)st.textContent='Empty';el.append(ch,st)}
-function make(){$('#v').innerHTML='<div class="row"><div id="cv" class="cvx"></div><div class="col"><button id="b1">Rearrange</button><button id="b2">Remove</button><button id="b3">New</button><button id="b4">Save</button></div></div>';cvInit();draw();
+function make(){$('#v').innerHTML='<div id="cv" class="cvx"></div><div class="bar"><button id="b1">Rearrange</button><button id="b2">Remove</button><button id="b3">New</button><button id="b4">Save</button></div>';cvInit();draw();
  $('#b1').onclick=()=>{const ids=S.cv.map(o=>o.id);S.cv=[];ids.forEach(place);sel=-1;draw()};
  $('#b2').onclick=()=>{if(sel>=0){const id=S.cv.splice(sel,1)[0].id;S.tray=S.tray.filter(i=>i!=id);sel=-1;save();draw()}};
  $('#b3').onclick=()=>{if(S.cv.length&&!confirm('Clear the current outfit?'))return;S.cv=[];S.tray=[];S.ed=null;sel=-1;save();draw()};
@@ -101,11 +104,14 @@ function make(){$('#v').innerHTML='<div class="row"><div id="cv" class="cvx"></d
   if(S.ed!=null&&S.outfits[S.ed])S.outfits[S.ed]=o;else S.outfits.push(o);S.cv=[];S.tray=[];S.ed=null;sel=-1;save();go('saved')}}
 function saved(){$('#v').innerHTML='<div class="row"><div class="list"></div></div><button id="bu">Backup</button>';
  if(!S.outfits.length)$('.list').textContent='No outfits yet';
- S.outfits.forEach((o,i)=>{const d=document.createElement('div');d.className='oc';d.innerHTML='<div><div class="pv cvx"></div><b></b></div><div class="col"><button class="op">Open</button><button class="dl">Delete</button></div>';
-  d.querySelector('b').textContent=o.name;renderCv(d.querySelector('.pv'),o.items);
-  d.querySelector('.op').onclick=()=>{S.cv=JSON.parse(JSON.stringify(o.items));S.tray=o.items.map(x=>x.id);S.ed=i;sel=-1;save();go('make')};
-  d.querySelector('.dl').onclick=()=>{if(!confirm('Delete this outfit?'))return;S.outfits.splice(i,1);if(S.ed==i)S.ed=null;else if(S.ed>i)S.ed--;save();saved()};$('.list').appendChild(d)});
+ S.outfits.forEach((o,i)=>{const d=document.createElement('div');d.className='oc';d.innerHTML='<div class="pv cvx"></div><b></b>';d.querySelector('b').textContent=o.name;renderCv(d.querySelector('.pv'),o.items);d.onclick=()=>{S.vi=i;go('view')};$('.list').appendChild(d)});
  $('#bu').onclick=backup}
+function view(){const o=S.outfits[S.vi];if(!o)return go('saved');
+ $('#v').innerHTML='<div class="ttl"></div><div id="cv" class="cvx big"></div><div class="bar"><button id="v1">Back</button><button id="v2">Edit</button><button id="v3">Delete</button></div>';
+ $('.ttl').textContent=o.name;renderCv($('#cv'),o.items);
+ $('#v1').onclick=()=>go('saved');
+ $('#v2').onclick=()=>{S.cv=JSON.parse(JSON.stringify(o.items));S.tray=o.items.map(x=>x.id);S.ed=S.vi;sel=-1;save();go('make')};
+ $('#v3').onclick=()=>{if(!confirm('Delete this outfit?'))return;S.outfits.splice(S.vi,1);if(S.ed==S.vi)S.ed=null;else if(S.ed>S.vi)S.ed--;save();go('saved')}}
 function backup(){const o=$('#dt');o.style.display='block';o.innerHTML='<h3>Backup / Restore</h3><p>Copy this text and keep it in a note. To restore, paste a backup below and press Restore.</p><textarea id="ta"></textarea><p><button id="cp">Copy</button> <button id="rs">Restore</button> <button id="x">Close</button></p>';
  const t=$('#ta');t.value=JSON.stringify({v:1,tags:S.tags,tray:S.tray,cv:S.cv,outfits:S.outfits,ed:S.ed});
  $('#cp').onclick=()=>{t.select();(navigator.clipboard?navigator.clipboard.writeText(t.value):Promise.reject()).catch(()=>document.execCommand('copy'))};
@@ -113,7 +119,7 @@ function backup(){const o=$('#dt');o.style.display='block';o.innerHTML='<h3>Back
   S.tags=mt(d.tags);S.tray=d.tray||[];S.cv=d.cv||[];S.outfits=d.outfits;S.ed=d.ed??null;clean();save();o.style.display='none';go(V)}catch(e){alert('Not a valid backup')}};
  $('#x').onclick=()=>o.style.display='none'}
 function go(v){V=v;sel=-1;$('#dt').style.display='none';$('#dr').style.display='none';$('#bk').style.display=v=='closet'?'block':'none';$('#hg').style.display=v=='make'?'block':'none';
- document.querySelectorAll('nav button').forEach(b=>b.className=b.dataset.v==v?'on':'');({closet:home,make,saved})[v]()}
+ document.querySelectorAll('nav button').forEach(b=>b.className=b.dataset.v==(v=='view'?'saved':v)?'on':'');({closet:home,make,saved,view})[v]()}
 document.querySelectorAll('nav button').forEach(b=>b.onclick=()=>go(b.dataset.v));
 $('#bk').onclick=()=>{S.tray.forEach(i=>{if(!S.cv.some(o=>o.id==i))place(i)});save();go('make')};
 $('#hg').onclick=()=>{const d=$('#dr');d.style.display=d.style.display=='block'?'none':'block';drawer()};
